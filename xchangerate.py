@@ -2,7 +2,14 @@ import os
 import requests
 from bs4 import BeautifulSoup
 import csv
-from datetime import datetime
+
+# make a data folder inside the repo and write file there
+REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
+data_dir = os.path.join(REPO_ROOT, "data")
+os.makedirs(data_dir, exist_ok=True)
+
+# Correct file path
+file_path = os.path.join(data_dir, "ExchangeRate.csv")
 
 # Define the URL
 url = "https://www.nbc.gov.kh/english/economic_research/exchange_rate.php"
@@ -23,16 +30,7 @@ rate_element = soup.find_all("font", color="#FF3300")[1]
 rate_text = rate_element.get_text(strip=True) if rate_element else "Rate not found"
 
 # Extract the currency pair
-currency_pair = "KHR/USD"  # Static value as it is fixed in the HTML structure
-
-# Define the folder path in your OneDrive
-folder_path = "/Users/roatny/Library/CloudStorage/OneDrive-GSNCMNW/MNW_Dataset/ExchangeRate"
-
-# Ensure the folder exists
-os.makedirs(folder_path, exist_ok=True)
-
-# Define the file path inside the folder
-file_path = os.path.join(folder_path, "ExchangeRate.csv")
+currency_pair = "KHR/USD"
 
 # Check if the file exists
 file_exists = os.path.isfile(file_path)
